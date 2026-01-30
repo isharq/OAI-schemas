@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "required": ["header", "pages"],
+  "properties": {
+    "header": {
+      "type": "object",
+      "required": ["filename", "file_size_mb", "total_slides", "main_deck_slides", "appendix_slides"],
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "file_size_mb": {
+          "type": "number"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "main_deck_slides": {
+          "type": "integer"
+        },
+        "appendix_slides": {
+          "type": "integer"
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["page_number", "image_count", "summary", "facts", "detailed_breakdown", "slide_category"],
+        "properties": {
+          "page_number": {
+            "type": "integer"
+          },
+          "image_count": {
+            "type": "integer"
+          },
+          "summary": {
+            "type": "string",
+            "description": "One-sentence summary"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Facts found, no hallucination"
+          },
+          "detailed_breakdown": {
+            "type": "string",
+            "description": "Detailed breakdown of everything including images, graphs, charts"
+          },
+          "tables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "array"
+                  }
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "text_content": {
+            "type": "string",
+            "description": "Full raw text"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "image_descriptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "slide_category": {
+            "type": "string",
+            "enum": [
+              "Cover slide",
+              "Closing slide",
+              "Summary slide",
+              "Problem slide",
+              "Solution slide",
+              "Product slide",
+              "Team slide",
+              "Market slide",
+              "Competition slide",
+              "Go-To-Market slide",
+              "Traction slide",
+              "Operating Plan slide",
+              "The Ask and/or Use Of Funds slide",
+              "Business Model slide",
+              "Target Customer / ICP slide",
+              "Pricing slide",
+              "Value Proposition slide",
+              "Unit Economics slide",
+              "Why Now / Timing slide",
+              "Moat and Defendability slide",
+              "Exit Strategy slide",
+              "Appendix slide",
+              "SLIDE TOPIC UNKNOWN"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
