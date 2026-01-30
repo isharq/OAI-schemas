@@ -1,0 +1,14 @@
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.log
+
+# Prompts (do not commit)
+schemas/**/v*.md
