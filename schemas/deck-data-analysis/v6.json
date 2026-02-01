@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "required": ["analysis_topic", "questions", "total_score", "max_score", "answerable_count", "total_questions", "pg_score"],
+  "properties": {
+    "analysis_topic": {
+      "type": "string",
+      "description": "The topic or category being analyzed (passed at runtime)"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["question", "answer", "score", "reasoning"],
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "The question being evaluated"
+          },
+          "answer": {
+            "type": ["boolean", "null"],
+            "description": "True or false answer to the question, or null if not answerable from the available data"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score value associated with this question (applied if answer is true)"
+          },
+          "reasoning": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Bullet points explaining why the answer is true, false, or null. For null answers, explicitly state what data is missing. For false answers, explain what is wrong with the existing data."
+          }
+        }
+      },
+      "description": "Array of questions with their answers and reasoning (number of questions is variable)"
+    },
+    "total_score": {
+      "type": "number",
+      "description": "Sum of all scores where answer is true"
+    },
+    "max_score": {
+      "type": "number",
+      "description": "The maximum possible score (passed at runtime)"
+    },
+    "answerable_count": {
+      "type": "number",
+      "description": "Count of questions that could be answered (true or false, not null)"
+    },
+    "total_questions": {
+      "type": "number",
+      "description": "Total number of questions evaluated"
+    },
+    "pg_score": {
+      "type": "string",
+      "enum": ["Red", "Yellow", "Green", "Missing", "Incomplete"],
+      "description": "Performance grade: Missing (no answerable questions), Incomplete (some questions unanswerable), Red (<50% of answerable), Yellow (50-80%), Green (>=80%)"
+    }
+  }
+}
