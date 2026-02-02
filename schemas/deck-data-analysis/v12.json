@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "required": ["analysis_topic", "questions", "total_score", "max_score", "answerable_count", "total_questions", "pg_score"],
+  "properties": {
+    "analysis_topic": {
+      "type": "string",
+      "description": "The topic or category being analyzed (passed at runtime). This field is for system use only and should never be mentioned in reasoning text."
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["question", "answer", "score_value", "score_awarded", "evidence", "reasoning"],
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "The question being evaluated"
+          },
+          "answer": {
+            "type": ["boolean", "null"],
+            "description": "True if criteria met, false if data exists but fails criteria, null if required data does not exist"
+          },
+          "score_value": {
+            "type": "number",
+            "description": "The point value of this question (extracted from question text or passed at runtime)"
+          },
+          "score_awarded": {
+            "type": "number",
+            "description": "Points awarded: equals score_value if answer is true, otherwise 0"
+          },
+          "evidence": {
+            "type": ["string", "null"],
+            "description": "REQUIRED. For true/false: cite specific content or location proving data exists (e.g., 'Slide 3 states...', 'Team section shows...'). For null: must be null (proves data doesn't exist)."
+          },
+          "reasoning": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Bullet points that MUST start with: 'Found:' (true), 'Issue:' (false), or 'Missing:' (null). Explain the determination without mentioning internal fields."
+          }
+        }
+      },
+      "description": "Array of questions with their answers and reasoning (number of questions is variable)"
+    },
+    "total_score": {
+      "type": "number",
+      "description": "Sum of all score_awarded values"
+    },
+    "max_score": {
+      "type": "number",
+      "description": "The maximum possible score (passed at runtime). If 0, treat as Missing."
+    },
+    "answerable_count": {
+      "type": "integer",
+      "description": "Count of questions that could be answered (true or false, not null)"
+    },
+    "total_questions": {
+      "type": "integer",
+      "description": "Total number of questions evaluated"
+    },
+    "pg_score": {
+      "type": "string",
+      "enum": ["Red", "Yellow", "Green", "Missing", "Incomplete"],
+      "description": "Performance grade: Missing (no questions answerable OR max_score=0), Incomplete (some questions not answerable), Red/Yellow/Green (all questions answerable, scored by percentage: <50%/50-80%/>=80%)"
+    }
+  }
+}
