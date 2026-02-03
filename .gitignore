@@ -11,4 +11,4 @@ Thumbs.db
 *.log
 
 # Prompts (do not commit)
-schemas/**/v*.md
+schemas/**/*.md

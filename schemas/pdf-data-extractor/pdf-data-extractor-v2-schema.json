@@ -1,0 +1,326 @@
+{
+  "type": "object",
+  "required": ["header", "pages"],
+  "properties": {
+    "header": {
+      "type": "object",
+      "required": ["filename", "file_size_mb", "total_slides", "main_deck_slides", "appendix_slides"],
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "file_size_mb": {
+          "type": "number"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "main_deck_slides": {
+          "type": "integer"
+        },
+        "appendix_slides": {
+          "type": "integer"
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["page_number", "image_count", "summary", "facts", "detailed_breakdown", "slide_category"],
+        "properties": {
+          "page_number": {
+            "type": "integer"
+          },
+          "image_count": {
+            "type": "integer"
+          },
+          "summary": {
+            "type": "string",
+            "description": "One-sentence summary"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Facts found, no hallucination"
+          },
+          "detailed_breakdown": {
+            "type": "string",
+            "description": "Detailed breakdown of everything including images, graphs, charts"
+          },
+          "tables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "text_content": {
+            "type": "string",
+            "description": "Full raw text"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "image_descriptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "slide_category": {
+            "type": "string",
+            "enum": [
+              "Cover slide",
+              "Closing slide",
+              "Summary slide",
+              "Problem slide",
+              "Solution slide",
+              "Product slide",
+              "Team slide",
+              "Market slide",
+              "Competition slide",
+              "Go-To-Market slide",
+              "Traction slide",
+              "Operating Plan slide",
+              "The Ask and/or Use Of Funds slide",
+              "Business Model slide",
+              "Target Customer / ICP slide",
+              "Pricing slide",
+              "Value Proposition slide",
+              "Unit Economics slide",
+              "Why Now / Timing slide",
+              "Moat and Defendability slide",
+              "Exit Strategy slide",
+              "Appendix slide",
+              "SLIDE TOPIC UNKNOWN"
+            ]
+          },
+          "team_members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "role"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Full name of the team member"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "Job title or role (e.g., CEO, CTO, Lead Developer, Advisor)"
+                },
+                "experience": {
+                  "type": "string",
+                  "description": "Brief description of relevant experience or achievements"
+                },
+                "companies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Previous or notable companies/organizations"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["founder", "team", "advisor"],
+                  "description": "Type of team member"
+                }
+              }
+            },
+            "description": "Extract when slide_category is 'Team slide'. Include all individuals shown with their names, roles, experience, and company affiliations. Distinguish between founders, team members, and advisors."
+          },
+          "market_sizing": {
+            "type": "object",
+            "properties": {
+              "tam": {
+                "type": "string",
+                "description": "Total Addressable Market value"
+              },
+              "sam": {
+                "type": "string",
+                "description": "Serviceable Addressable Market value"
+              },
+              "som": {
+                "type": "string",
+                "description": "Serviceable Obtainable Market value"
+              },
+              "methodology": {
+                "type": "string",
+                "description": "How the market was sized (top-down, bottom-up, etc.)"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Sources cited for market data"
+              },
+              "year": {
+                "type": "string",
+                "description": "Year or timeframe for the market sizing data"
+              }
+            },
+            "description": "Extract when slide_category is 'Market slide'. Capture TAM/SAM/SOM values, sizing methodology, sources, and dates."
+          },
+          "competitors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of competitor or alternative"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["incumbent", "startup", "substitute", "indirect"],
+                  "description": "Type of competitor"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "How this competitor is positioned or what they do"
+                }
+              }
+            },
+            "description": "Extract when slide_category is 'Competition slide'. Include all competitors, incumbents, and alternatives mentioned. Identify whether they are established companies, startups, or substitute products."
+          },
+          "traction_metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["metric", "value"],
+              "properties": {
+                "metric": {
+                  "type": "string",
+                  "description": "Name of the metric (e.g., 'Revenue', 'Users', 'MRR', 'Growth Rate')"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The metric value (e.g., '$151K', '11,500 users', '20% MoM')"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "Date or time period for this data point if specified"
+                },
+                "context": {
+                  "type": "string",
+                  "description": "Additional context (e.g., 'growing', 'as of Q4 2025', 'projected')"
+                }
+              }
+            },
+            "description": "Extract when slide_category is 'Traction slide'. Capture all metrics shown, including time series data if available. Extract data points from charts/graphs over time, not just current snapshots."
+          },
+          "use_of_funds": {
+            "type": "object",
+            "properties": {
+              "total_raise": {
+                "type": "string",
+                "description": "Total amount being raised (e.g., '$750k')"
+              },
+              "raise_structure": {
+                "type": "string",
+                "description": "Structure of the raise (e.g., 'SAFE Note', 'Priced Round', 'Convertible Note')"
+              },
+              "timeframe": {
+                "type": "string",
+                "description": "Timeframe the funds will cover (e.g., '18 months', '24 months')"
+              },
+              "allocation": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "Spending category (e.g., 'Engineering', 'Sales & Marketing', 'Operations', 'Product')"
+                    },
+                    "amount": {
+                      "type": "string",
+                      "description": "Amount or percentage allocated to this category"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "What this spending will accomplish"
+                    }
+                  }
+                },
+                "description": "Breakdown of how funds will be allocated by category"
+              },
+              "milestones": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "milestone": {
+                      "type": "string",
+                      "description": "Specific milestone or goal"
+                    },
+                    "timeframe": {
+                      "type": "string",
+                      "description": "When this milestone will be achieved"
+                    },
+                    "metric": {
+                      "type": "string",
+                      "description": "Measurable metric if specified (e.g., '$1M ARR', '100+ organizations')"
+                    }
+                  }
+                },
+                "description": "Specific milestones tied to the use of funds"
+              }
+            },
+            "description": "Extract when slide_category is 'The Ask and/or Use Of Funds slide'. Capture the raise amount, structure, timeframe, spending breakdown by category, and specific milestones."
+          },
+          "contact_info": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the contact person"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "Role or title (e.g., 'CEO', 'Co-Founder')"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Email address"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "Phone number if provided"
+                },
+                "linkedin": {
+                  "type": "string",
+                  "description": "LinkedIn URL if provided"
+                }
+              }
+            },
+            "description": "Extract from 'Closing slide' or any slide with contact information. Capture name, role, and contact details (email, phone, LinkedIn) for founders or key contacts."
+          }
+        }
+      }
+    }
+  }
+}
