@@ -30,7 +30,7 @@
     },
     "captured_data": {
       "type": "object",
-      "description": "One-time data extractions from across the entire deck. Scan all slides and extract each type of information once when found. Do NOT repeat these fields per-slide.",
+      "description": "DECK-LEVEL data: Extract these types of information ONCE by scanning the entire deck. When found, note which slide it appeared on. These are aggregated findings, not per-slide observations. DO NOT extract these again in the pages array.",
       "properties": {
         "market_sizing": {
           "type": "object",
