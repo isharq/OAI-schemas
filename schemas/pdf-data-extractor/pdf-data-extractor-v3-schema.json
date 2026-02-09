@@ -1,0 +1,323 @@
+{
+  "type": "object",
+  "required": ["header", "pages"],
+  "properties": {
+    "header": {
+      "type": "object",
+      "required": ["filename", "file_size_mb", "total_slides", "main_deck_slides", "appendix_slides"],
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "file_size_mb": {
+          "type": "number"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "main_deck_slides": {
+          "type": "integer"
+        },
+        "appendix_slides": {
+          "type": "integer"
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["page_number", "image_count", "summary", "facts", "detailed_breakdown", "slide_category"],
+        "properties": {
+          "page_number": {
+            "type": "integer"
+          },
+          "image_count": {
+            "type": "integer"
+          },
+          "summary": {
+            "type": "string",
+            "description": "One-sentence summary"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Key facts visible on the slide. Extract from visual analysis, not text extraction."
+          },
+          "detailed_breakdown": {
+            "type": "string",
+            "description": "Comprehensive visual analysis of the slide. Describe everything you see: all text visible in graphics, numbers, charts, tables, images, design elements, layout, and visual hierarchy. This is vision-first analysis, not text extraction."
+          },
+          "tables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "URLs and hyperlinks only. Do not include regular text here."
+          },
+          "image_descriptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "slide_category": {
+            "type": "string",
+            "enum": [
+              "Cover slide",
+              "Closing slide",
+              "Summary slide",
+              "Problem slide",
+              "Solution slide",
+              "Product slide",
+              "Team slide",
+              "Market slide",
+              "Competition slide",
+              "Go-To-Market slide",
+              "Traction slide",
+              "Operating Plan slide",
+              "The Ask and/or Use Of Funds slide",
+              "Business Model slide",
+              "Target Customer / ICP slide",
+              "Pricing slide",
+              "Value Proposition slide",
+              "Unit Economics slide",
+              "Why Now / Timing slide",
+              "Moat and Defendability slide",
+              "Exit Strategy slide",
+              "Appendix slide",
+              "SLIDE TOPIC UNKNOWN"
+            ]
+          },
+          "team_members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "role"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Full name of the team member"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "Job title or role (e.g., CEO, CTO, Lead Developer, Advisor)"
+                },
+                "experience": {
+                  "type": "string",
+                  "description": "Brief description of relevant experience or achievements"
+                },
+                "companies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Previous or notable companies/organizations"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["founder", "team", "advisor"],
+                  "description": "Type of team member"
+                }
+              }
+            },
+            "description": "Extract if ANY team members are visible on this slide. Look for names, roles, headshots, bios, company logos in visual elements."
+          },
+          "market_sizing": {
+            "type": "object",
+            "properties": {
+              "tam": {
+                "type": "string",
+                "description": "Total Addressable Market value. Look for dollar amounts labeled as TAM or 'total market'."
+              },
+              "sam": {
+                "type": "string",
+                "description": "Serviceable Addressable Market value. Look for dollar amounts labeled as SAM or 'serviceable market'."
+              },
+              "som": {
+                "type": "string",
+                "description": "Serviceable Obtainable Market value. Look for dollar amounts labeled as SOM or 'target market'."
+              },
+              "methodology": {
+                "type": "string",
+                "description": "How the market was sized (top-down, bottom-up, etc.)"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Sources cited for market data"
+              },
+              "year": {
+                "type": "string",
+                "description": "Year or timeframe for the market sizing data"
+              }
+            },
+            "description": "Extract if ANY market sizing data is visible on this slide, regardless of slide category. Look for: TAM/SAM/SOM labels, dollar values in boxes/cards, market size charts, growth percentages. Common formats: '$31B+', '$2.3B', '31 billion', etc."
+          },
+          "competitors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of competitor or alternative"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["incumbent", "startup", "substitute", "indirect"],
+                  "description": "Type of competitor"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "How this competitor is positioned or what they do"
+                }
+              }
+            },
+            "description": "Extract if ANY competitors are mentioned or shown on this slide. Look for: company names, logos, comparison tables, competitive matrices, alternative solutions."
+          },
+          "traction_metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["metric", "value"],
+              "properties": {
+                "metric": {
+                  "type": "string",
+                  "description": "Name of the metric (e.g., 'Revenue', 'Users', 'MRR', 'Growth Rate')"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The metric value (e.g., '$151K', '11,500 users', '20% MoM')"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "Date or time period for this data point if specified"
+                },
+                "context": {
+                  "type": "string",
+                  "description": "Additional context (e.g., 'growing', 'as of Q4 2025', 'projected')"
+                }
+              }
+            },
+            "description": "Extract if ANY traction metrics are visible on this slide. Look for: numbers with labels (revenue, users, growth), charts with data points over time, trend lines, KPI dashboards. Extract individual data points from charts, not just current values."
+          },
+          "use_of_funds": {
+            "type": "object",
+            "properties": {
+              "total_raise": {
+                "type": "string",
+                "description": "Total amount being raised (e.g., '$750k')"
+              },
+              "raise_structure": {
+                "type": "string",
+                "description": "Structure of the raise (e.g., 'SAFE Note', 'Priced Round', 'Convertible Note')"
+              },
+              "timeframe": {
+                "type": "string",
+                "description": "Timeframe the funds will cover (e.g., '18 months', '24 months')"
+              },
+              "allocation": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "Spending category (e.g., 'Engineering', 'Sales & Marketing', 'Operations', 'Product')"
+                    },
+                    "amount": {
+                      "type": "string",
+                      "description": "Amount or percentage allocated to this category"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "What this spending will accomplish"
+                    }
+                  }
+                },
+                "description": "Breakdown of how funds will be allocated by category"
+              },
+              "milestones": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "milestone": {
+                      "type": "string",
+                      "description": "Specific milestone or goal"
+                    },
+                    "timeframe": {
+                      "type": "string",
+                      "description": "When this milestone will be achieved"
+                    },
+                    "metric": {
+                      "type": "string",
+                      "description": "Measurable metric if specified (e.g., '$1M ARR', '100+ organizations')"
+                    }
+                  }
+                },
+                "description": "Specific milestones tied to the use of funds"
+              }
+            },
+            "description": "Extract if ANY fundraising or use of funds information is visible on this slide. Look for: dollar amounts being raised, spending breakdowns, pie charts, roadmaps with funding milestones."
+          },
+          "contact_info": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the contact person"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "Role or title (e.g., 'CEO', 'Co-Founder')"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Email address"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "Phone number if provided"
+                },
+                "linkedin": {
+                  "type": "string",
+                  "description": "LinkedIn URL if provided"
+                }
+              }
+            },
+            "description": "Extract if ANY contact information is visible on this slide. Look for: email addresses, phone numbers, LinkedIn URLs, QR codes for contact."
+          }
+        }
+      }
+    }
+  }
+}
