@@ -1,0 +1,266 @@
+{
+  "type": "object",
+  "required": ["header", "pages"],
+  "properties": {
+    "header": {
+      "type": "object",
+      "required": ["filename", "file_size_mb", "total_slides", "main_deck_slides", "appendix_slides"],
+      "properties": {
+        "filename": {
+          "type": "string",
+          "description": "The PDF filename"
+        },
+        "file_size_mb": {
+          "type": "number",
+          "description": "File size in megabytes"
+        },
+        "total_slides": {
+          "type": "integer",
+          "description": "Total number of pages/slides in the PDF"
+        },
+        "main_deck_slides": {
+          "type": "integer",
+          "description": "Number of slides before the appendix starts"
+        },
+        "appendix_slides": {
+          "type": "integer",
+          "description": "Number of slides in the appendix section"
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "description": "Per-slide data. Each page object contains ONLY information visibly present on THAT specific slide.",
+      "items": {
+        "type": "object",
+        "required": ["visual_slide_number", "is_appendix", "detailed_breakdown"],
+        "properties": {
+          "visual_slide_number": {
+            "type": "integer",
+            "description": "One-indexed slide number as a human would count (first slide = 1)."
+          },
+          "is_appendix": {
+            "type": "boolean",
+            "description": "True if this slide is visually identified as an appendix slide. Appendix indicators: smaller font, 'Appendix' label, reference-style content, footnotes/citations, backup data sections, slides after a clear 'Thank You' or closing slide."
+          },
+          "detailed_breakdown": {
+            "type": "string",
+            "description": "Comprehensive visual analysis of THIS slide only. Include ALL key facts, statements, and observations. Describe everything visible: all text in graphics, numbers, charts, tables, images, design elements, layout, visual hierarchy. Vision-first analysis. CRITICAL: Do not describe or reference content from other slides. Only describe what you see on this exact slide."
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "URLs and hyperlinks visible on THIS slide only. Do not include regular text."
+          },
+          "team_members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "role"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Full name of team member as shown on THIS slide"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "Job title or role visible on THIS slide"
+                },
+                "experience": {
+                  "type": "string",
+                  "description": "Experience description visible on THIS slide"
+                },
+                "companies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Company names visible on THIS slide in relation to this person"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["founder", "team", "advisor"],
+                  "description": "Type of team member as indicated on THIS slide"
+                }
+              }
+            },
+            "description": "ONLY populate if team member information is VISIBLY PRESENT on THIS specific slide. Look for: names, roles, headshots, bios, company logos. Leave empty if not present on this slide."
+          },
+          "market_sizing": {
+            "type": "object",
+            "properties": {
+              "tam": {
+                "type": "string",
+                "description": "Total Addressable Market value if VISIBLE on THIS slide"
+              },
+              "sam": {
+                "type": "string",
+                "description": "Serviceable Addressable Market value if VISIBLE on THIS slide"
+              },
+              "som": {
+                "type": "string",
+                "description": "Serviceable Obtainable Market value if VISIBLE on THIS slide"
+              },
+              "methodology": {
+                "type": "string",
+                "description": "Market sizing methodology if VISIBLE on THIS slide"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Data sources if VISIBLE on THIS slide"
+              },
+              "year": {
+                "type": "string",
+                "description": "Timeframe for market data if VISIBLE on THIS slide"
+              }
+            },
+            "description": "ONLY populate if market sizing data is VISIBLY PRESENT on THIS specific slide. Look for TAM/SAM/SOM labels or market value numbers. Leave empty if not present on this slide. Do not carry forward from previous slides."
+          },
+          "competitors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Competitor name as shown on THIS slide"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["incumbent", "startup", "substitute", "indirect"],
+                  "description": "Competitor type as indicated on THIS slide"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Competitor description visible on THIS slide"
+                }
+              }
+            },
+            "description": "ONLY populate if competitor information is VISIBLY PRESENT on THIS specific slide. Look for: company names, logos, comparison tables, matrices. Leave empty if not present on this slide."
+          },
+          "traction_metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["metric", "value"],
+              "properties": {
+                "metric": {
+                  "type": "string",
+                  "description": "Metric name as shown on THIS slide"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Metric value as shown on THIS slide"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "Date/period for this metric if shown on THIS slide"
+                },
+                "context": {
+                  "type": "string",
+                  "description": "Additional context visible on THIS slide"
+                }
+              }
+            },
+            "description": "ONLY populate if traction metrics are VISIBLY PRESENT on THIS specific slide. Look for: revenue, users, growth numbers, KPI charts. Leave empty if not present on this slide. Do not carry forward from previous slides."
+          },
+          "use_of_funds": {
+            "type": "object",
+            "properties": {
+              "total_raise": {
+                "type": "string",
+                "description": "Total raise amount if VISIBLE on THIS slide"
+              },
+              "raise_structure": {
+                "type": "string",
+                "description": "Raise structure type if VISIBLE on THIS slide"
+              },
+              "timeframe": {
+                "type": "string",
+                "description": "Fund duration if VISIBLE on THIS slide"
+              },
+              "allocation": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "Spending category visible on THIS slide"
+                    },
+                    "amount": {
+                      "type": "string",
+                      "description": "Amount/percentage visible on THIS slide"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Category description visible on THIS slide"
+                    }
+                  }
+                },
+                "description": "Fund allocation breakdown visible on THIS slide"
+              },
+              "milestones": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "milestone": {
+                      "type": "string",
+                      "description": "Milestone text visible on THIS slide"
+                    },
+                    "timeframe": {
+                      "type": "string",
+                      "description": "Milestone timeframe visible on THIS slide"
+                    },
+                    "metric": {
+                      "type": "string",
+                      "description": "Milestone metric visible on THIS slide"
+                    }
+                  }
+                },
+                "description": "Milestones visible on THIS slide"
+              }
+            },
+            "description": "ONLY populate if use of funds information is VISIBLY PRESENT on THIS specific slide. Look for: raise amounts, spending breakdowns, pie charts, funding roadmaps. Leave empty if not present on this slide. Do not carry forward from previous slides."
+          },
+          "contact_info": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Contact name if VISIBLE on THIS slide"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "Contact role if VISIBLE on THIS slide"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Email address if VISIBLE on THIS slide"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "Phone number if VISIBLE on THIS slide"
+                },
+                "linkedin": {
+                  "type": "string",
+                  "description": "LinkedIn URL if VISIBLE on THIS slide"
+                }
+              }
+            },
+            "description": "ONLY populate if contact information is VISIBLY PRESENT on THIS specific slide. Leave empty if not present on this slide. Do not carry forward from previous slides."
+          }
+        }
+      }
+    }
+  }
+}
