@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": ["title", "summary", "article", "image_prompt"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "An eyecatching title between 10-15 words that captures the essence of the news story"
+    },
+    "summary": {
+      "type": "string",
+      "description": "A short, 1-paragraph TL;DR that summarizes the key points of the news story in 2-3 sentences"
+    },
+    "article": {
+      "type": "string",
+      "description": "The complete news article with 3-5 well-structured paragraphs covering the story comprehensively"
+    },
+    "image_prompt": {
+      "type": "string",
+      "description": "A simple, visual 5-10 word phrase describing a scene that could be used to generate an accompanying image for the article"
+    }
+  },
+  "additionalProperties": false
+}
