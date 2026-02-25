@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": ["title", "summary", "article", "image_prompt"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "An eyecatching title between 10-15 words that captures the essence of the news story. All currency amounts must be converted to USD and displayed with $ symbol, rounded to two significant digits."
+    },
+    "summary": {
+      "type": "string",
+      "description": "A short, 1-paragraph TL;DR that summarizes the key points of the news story in 2-3 sentences. All figures rounded to two significant digits."
+    },
+    "article": {
+      "type": "string",
+      "description": "The complete news article with 3-5 well-structured paragraphs in HTML format. Use <p> tags for paragraphs and <a> tags for links. If a company link is available, link the company name on first mention. For the primary funding amount (or main financial figure), show both original currency and USD conversion in format: €7.1m (approx. $8.4m). All figures rounded to two significant digits. Must end with <hr /> followed by a newsletter footer paragraph mentioning this is from Pitch Guide's All Funding Rounds under $20m newsletter with a subscription link to https://haje.pub/20 naturally embedded in the text. Vary the wording of the footer each time."
+    },
+    "image_prompt": {
+      "type": "string",
+      "description": "A simple, visual 5-10 word phrase describing a scene that could be used to generate an accompanying image for the article"
+    }
+  },
+  "additionalProperties": false
+}
