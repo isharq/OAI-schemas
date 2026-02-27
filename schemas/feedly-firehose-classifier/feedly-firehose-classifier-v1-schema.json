@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "required": ["category", "reasoning", "amount_known"],
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": [
+        "Round 20m or less",
+        "VC Fund Announcement",
+        "Roundup article",
+        "None of the above"
+      ],
+      "description": "The classification category for the article"
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "A brief explanation (1-2 sentences) for why this article was classified into the chosen category, citing specific evidence from the headline and body"
+    },
+    "startup_name": {
+      "type": "string",
+      "description": "The name of the startup (company name only, no additional text). Only provide if the article is about a single company's funding round. Leave empty for VC Fund Announcements, Roundup articles, or None of the above."
+    },
+    "amount_known": {
+      "type": "boolean",
+      "description": "True if the funding amount can be determined from the article. False if the amount is not disclosed or unclear."
+    },
+    "amount_raised": {
+      "type": "string",
+      "description": "The funding amount in the original format with 'm' suffix (e.g., '20m', '15.5m', '7.1m'). Only provide if amount_known is true. Round to two significant digits."
+    },
+    "currency_raised": {
+      "type": "string",
+      "description": "The currency code of the original funding amount (e.g., 'USD', 'EUR', 'GBP'). Only provide if amount_known is true."
+    },
+    "usd_equivalent": {
+      "type": "string",
+      "description": "The USD equivalent of the funding amount with $ symbol and 'm' suffix (e.g., '$20m', '$8.4m'). Only provide if amount_known is true. Round to two significant digits. If the original currency is USD, this should match the amount_raised with $ prefix."
+    }
+  },
+  "additionalProperties": false
+}
